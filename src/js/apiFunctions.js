@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const key = process.env.REACT_APP_API_KEY;
-const url = "http://api.weatherapi.com/v1";
+const url = "https://api.weatherapi.com/v1";
 
 export const getCurrentWeather = async (location) => {
 	if (location) {
