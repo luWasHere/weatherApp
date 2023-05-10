@@ -1,0 +1,11 @@
+// utils
+@import "utils/vars";
+@import "utils/mixins";
+
+// global
+@import "global/normalize.scss";
+@import "global/base.scss";
+
+// components
+@import "components/search";
+@import "components/weather";

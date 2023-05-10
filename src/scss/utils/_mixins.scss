@@ -1,0 +1,12 @@
+@mixin flex($direction, $wrap, $alignI, $justifyC) {
+	display: flex;
+	flex-direction: $direction;
+	flex-wrap: $wrap;
+	align-items: $alignI;
+	justify-content: $justifyC;
+}
+
+@mixin title {
+	color: $colorMain;
+	font-size: 3rem;
+}

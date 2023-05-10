@@ -1,0 +1,108 @@
+.searchContainer {
+	height: 100vh;
+	@include flex(column, initial, center, center);
+	.searchBarContainer {
+		@include flex(column, initial, center, center);
+		h1 {
+			position: relative;
+			color: rgb(81, 166, 235);
+
+			&::after {
+				content: "How's the Weather?";
+				position: absolute;
+				top: 0;
+				left: 0;
+				text-shadow: 0px 0px 60px #0270ff4f;
+				text-shadow: 0px 0px 40px #0270ff8a;
+				text-shadow: 0px 0px 20px #0270ff;
+				animation: fadeInOut 3s infinite ease-in-out;
+			}
+
+			@keyframes fadeInOut {
+				0% {
+					opacity: 1;
+					filter: brightness(100%);
+				}
+				50% {
+					opacity: 0.7;
+					filter: brightness(80%);
+				}
+				100% {
+					opacity: 1;
+					filter: brightness(100%);
+				}
+			}
+		}
+
+		.inputContainer {
+			margin-bottom: 100px;
+			max-width: 420px;
+			width: 90vw;
+			@include flex(column, initial, center, center);
+			position: relative;
+			input {
+				border: none;
+				box-shadow: none;
+				outline: none;
+				background-color: #0000006c;
+				padding: 12px 16px;
+				border-radius: 20px;
+				border: #dddddd3f solid 2px;
+				color: #ccc;
+				width: 100%;
+				transition: all 0.4s;
+				backdrop-filter: blur(3px);
+				font-weight: 100;
+				font-family: "Cutive Mono", monospace;
+				letter-spacing: 1px;
+				position: relative;
+				z-index: 20;
+
+				&:hover,
+				&:focus {
+					border: #dddddd69 solid 2px;
+					transition: all 0.4s;
+					background-color: #00000071;
+				}
+				&::placeholder {
+					color: #666;
+				}
+				&::spelling-error {
+					text-decoration: none !important;
+				}
+			}
+			.suggestions {
+				@include flex(column, initial, initial, initial);
+				backdrop-filter: blur(3px);
+				background-color: #000000b2;
+				color: #ffffff63;
+				border-radius: 0 0 20px 20px;
+				overflow: hidden;
+				width: 95%;
+				position: absolute;
+				z-index: 10;
+				top: 45px;
+
+				.sugg {
+					&:nth-child(even) {
+						background: rgba(255, 255, 255, 0.02);
+					}
+					li {
+						padding: 6px 20px;
+						cursor: default;
+						user-select: none;
+
+						&:hover {
+							color: #ffffff93;
+							cursor: pointer;
+						}
+
+						&:first-child {
+							padding: 8px 20px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
