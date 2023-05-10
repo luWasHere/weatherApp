@@ -7,20 +7,7 @@ export const getCurrentWeather = async (location) => {
 	if (location) {
 		try {
 			const res = await axios.get(
-				`${url}/current.json?key=${key}&q=${location}`
-			);
-			return res.data;
-		} catch (error) {
-			console.error("Error al obtener la información del clima:", error);
-		}
-	}
-};
-
-export const getForecast = async (location) => {
-	if (location) {
-		try {
-			const res = await axios.get(
-				`${url}/forecast.json?key=${key}&q=${location}&days=6`
+				`${url}/forecast.json?key=${key}&q=${location}&days=6&aqi=no&alerts=no&hour=25`
 			);
 			return res.data;
 		} catch (error) {

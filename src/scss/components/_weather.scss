@@ -11,6 +11,18 @@
 		backdrop-filter: blur(2px);
 		padding: 20px;
 		border-radius: 15px;
+		animation: appear 0.4s ease-in;
+
+		@keyframes appear {
+			0% {
+				transform: scale(10%);
+				filter: opacity(0%);
+			}
+			100% {
+				transform: scale(100%);
+				filter: opacity(100%);
+			}
+		}
 
 		.head {
 			@include flex(initial, initial, start, initial);
@@ -35,6 +47,11 @@
 				color: #ddd;
 				margin: 0;
 				font-size: 2rem;
+
+				span {
+					font-size: 1rem;
+					color: #aaa;
+				}
 			}
 			h2 {
 				font-family: "Cutive Mono", monospace;
@@ -71,7 +88,9 @@
 						margin: 0;
 						line-height: 0.7;
 						color: #ddd;
-						font-size: 3.5rem;
+						font-size: 3.3rem;
+						min-width: 65px;
+						text-align: center;
 					}
 					span {
 						font-size: 1.3rem;
@@ -100,6 +119,44 @@
 				font-size: 1rem;
 				position: relative;
 				top: -5px;
+			}
+		}
+		.forecastContainer {
+			width: fit-content;
+			margin: 10px auto 0 auto;
+			@include flex(row, initial, initial, initial);
+			gap: 10px;
+			.day {
+				@include flex(column, initial, center, center);
+				padding: 14px;
+				background: #ffffff07;
+				border-radius: 8px;
+				width: 100px;
+
+				h4 {
+					font-size: 1.2rem;
+					color: #ccc;
+				}
+
+				img {
+					margin: 0;
+					width: 4rem;
+					height: 50%;
+					object-fit: cover;
+					margin-bottom: 5px;
+				}
+
+				span {
+					@include flex(initial, initial, end, initial);
+					p {
+						font-size: 0.8rem;
+						margin-left: 2px;
+
+						&:nth-child(1) {
+							margin-right: 4px;
+						}
+					}
+				}
 			}
 		}
 	}

@@ -1,23 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import { WeatherContext } from "../../context/WeatherContext";
-import { getCurrentWeather, getForecast } from "../../js/apiFunctions";
-import { wait } from "@testing-library/user-event/dist/utils";
-import { waitFor } from "@testing-library/react";
+import { getCurrentWeather } from "../../js/apiFunctions";
 import { Link } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 const Weather = () => {
 	const { weather } = useContext(WeatherContext);
 	const [weatherData, setWeatherData] = useState();
-	const [forecastData, setForecastData] = useState();
 
 	useEffect(() => {
 		getCurrentWeather(weather.locationUrl).then(
 			(res) => res && setWeatherData(res)
 		);
-		getForecast(weather.locationUrl).then((res) => res && setForecastData(res));
 	}, []);
 
-	const [temp, setTemp] = useState(null);
+	const [temp, setTemp] = useState("c");
 
 	const tempBtn = (e) => {
 		const btns = document.querySelectorAll(".tempBtn");
@@ -28,9 +25,7 @@ const Weather = () => {
 		e.target.classList.add("active");
 
 		let typeOfTemp = e.target.innerText[1];
-		typeOfTemp === "C"
-			? setTemp(Math.round(weatherData.current.temp_c))
-			: setTemp(Math.round(weatherData.current.temp_f));
+		typeOfTemp === "C" ? setTemp("c") : setTemp("f");
 	};
 
 	const getDate = (date) => {
@@ -46,6 +41,10 @@ const Weather = () => {
 		return dateString;
 	};
 
+	if (!weatherData) {
+		return <Loader />;
+	}
+
 	return (
 		<div className="weatherContainer">
 			{weatherData && (
@@ -55,7 +54,14 @@ const Weather = () => {
 							<i className="fa-solid fa-backward"></i>
 						</Link>
 						<div className="title">
-							<h1>Buenos Aires, Argentina.</h1>
+							<h1>
+								{weatherData.location.name}
+								<span>
+									{" ("}
+									{weatherData.location.region}, {weatherData.location.country}
+									{")"}
+								</span>
+							</h1>
 							<h2>{getDate(weatherData.location.localtime_epoch)}</h2>
 						</div>
 					</div>
@@ -66,7 +72,7 @@ const Weather = () => {
 						<div className="numb">
 							<img src={`${weatherData.current.condition.icon}`} alt="" />
 							<div className="btns">
-								<h3>{temp ? temp : Math.round(weatherData.current.temp_c)}</h3>
+								<h3>{Math.round(weatherData.current[`temp_${temp}`])}</h3>
 								<span className="tempBtn active" onClick={tempBtn}>
 									°C
 								</span>
@@ -85,12 +91,30 @@ const Weather = () => {
 						</p>
 					</div>
 
-					<div className="forecast">
-						{forecastData && (
-							<div>
-								<div></div>
-							</div>
-						)}
+					<div className="forecastContainer">
+						{weatherData.forecast.forecastday.map((day) => {
+							return (
+								<div className="day">
+									<h4>
+										{(() => {
+											const date = new Date(day.date);
+											const dayOfWeek = date
+												.toLocaleString("en-us", { weekday: "short" })
+												.slice(0, 3);
+
+											return dayOfWeek;
+										})()}
+									</h4>
+									<img src={day.day.condition.icon} alt="" />
+									<span>
+										{Math.round(day.day[`maxtemp_${temp}`])}
+										<p>mx</p>
+										{Math.round(day.day[`mintemp_${temp}`])}
+										<p>mn</p>
+									</span>
+								</div>
+							);
+						})}
 					</div>
 				</div>
 			)}

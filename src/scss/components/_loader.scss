@@ -1,0 +1,34 @@
+.loader {
+	position: fixed; /* Posicionamiento fijo para que se mantenga en el centro */
+	top: calc(50% - 25px);
+	left: calc(50% - 25px);
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border: 3px solid #90caf9; /* Color celeste */
+	border-top-color: transparent; /* Ocultamos la parte superior de la rueda */
+	animation: spin 1s linear infinite, glow 2s ease-out infinite; /* Animaciones */
+}
+
+/* Animación de rotación */
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* Animación de glow */
+@keyframes glow {
+	0% {
+		box-shadow: 0 0 0 0 rgba(144, 202, 249, 0.4);
+	}
+	70% {
+		box-shadow: 0 0 0 10px rgba(144, 202, 249, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(144, 202, 249, 0);
+	}
+}
